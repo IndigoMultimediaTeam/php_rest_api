@@ -80,15 +80,27 @@ class Request{
 	public function bodyItem($key){ return $this->body[$key]; }
 	public function bodyItems($keys){ return array_map(array($this, 'bodyItem'), $keys); }
 	/**
+	 * @param string[] $header - Header items wanted to log
+	 * @return array<string, mixed> - Array representation of the class.
+	 * */
+	public function toArray($header){
+		$out= get_object_vars($this);
+		$header= array_map('Request::headerItem', $header);
+		$out['header']= $header;
+		return $out;
+	}
+	/**
+	 * @param string[] $header - Header items wanted to log
 	 * @return string - JSON representation of the class.
 	 * */
-	public function toJSON(){ return json_encode(get_object_vars($this)); }
+	public function toJSON($header){ return json_encode($this->toArray($header)); }
 	/**
 	 * Returns headers item based on given `$name`.
 	 * @param "Authorization"||"Accept" $name
 	 * */
 	static function headerItem($name, $default= NULL){
-		$key= "HTTP_".strtoupper(str_replace('-', '_', $name));
+		$key= strtoupper(str_replace('-', '_', $name));
+		if($key!=='CONTENT_TYPE') $key= "HTTP_".$key;
 		return isset($_SERVER[$key]) ? $_SERVER[$key] : $default;
 	}
 }
