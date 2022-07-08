@@ -1,3 +1,4 @@
+[![LTS+sub-branches](https://img.shields.io/badge/submodule-LTS+sub--branches-informational?style=flat-square&logo=git)](https://github.com/IndigoMultimediaTeam/lts-driven-git-submodules)
 # PHP REST API
 Actually, this repository provides a generic way to implement API (so not only REST API). *Tested/used in PHP <5.3*.
 The expected directory structure is:
@@ -14,6 +15,16 @@ The API entry is splitted into several steps:
 1. special cases … see for exmaple [AuthorizationJWT.php](./AuthorizationJWT.php), [HelpREST](./HelpREST.php)
 1. the actual processing of the request … see [apiREST.php](./apiREST.php)
 1. response … see for example [ResponseJSON](./ResponseJSON.php)
+
+## Use in your repo
+**Use**:
+```bash
+cd TARGET_PATH
+git submodule add -b main --depth=1 git@github.com:IndigoMultimediaTeam/php_rest_api _internal
+```
+… more info [`git submodule`](https://gist.github.com/jaandrle/b4836d72b63a3eefc6126d94c683e5b3).
+
+*Target folder (`_internal`) schouldn’t be accessible from outside of the web!*
 
 ## Minimal REST API example whith authentication
 <details>
