@@ -80,3 +80,35 @@ api/
 … this is similar to REST API handlering via [apiREST](./apiREST.php).
 
 For more extended version visits [DHLC-Internet-Networking/web/api/rest at dev/php_rest_api · jaandrle/DHLC-Internet-Networking](https://github.com/jaandrle/DHLC-Internet-Networking/tree/dev/php_rest_api/web/api/rest).
+
+
+## Minimal version of making API accessible from inside the server
+```php
+<?php
+/**
+ * @param string $get Target URL `version/target`
+ * @param "get"|"delete"|"put"|"post" $method
+ * @param array<string, mixed> $body
+ * */
+function api($get, $method= 'get', $body= array()){
+	$kvsbvkfbkfbk= $get; $asihbfjkbwek= $method; $khbdhsksdnkv= $body;
+	extract($GLOBALS);
+	$lbvsfkvdfkfvbk= $__dROOT.'api/rest/';
+	/* import { Config } from */require_once $lbvsfkvdfkfvbk.'_config.php';
+	$dfkjbsdkbk= new config();
+	$dfkjbsdkbk->api_url= 'https://'.$_SERVER['HTTP_HOST'].'/api/rest';
+	/* import { Request } */require_once $lbvsfkvdfkfvbk.'_internal/RequestServer.php';
+	$skbadkbdkbk= new Request($dfkjbsdkbk, $kvsbvkfbkfbk, $asihbfjkbwek, $khbdhsksdnkv);
+	extract($dfkjbsdkbk->vars_shared);
+	foreach($dfkjbsdkbk->requires_once as $path_req)
+		require_once($lbvsfkvdfkfvbk.$path_req);
+	
+	$config= $dfkjbsdkbk;
+	$request= $skbadkbdkbk;
+	$folder= $lbvsfkvdfkfvbk.$request->targetPath();
+	$path= realpath($folder);
+	if($path===false||!is_dir($path)) throw new \Exception("Endpoint '$folder' doesn’t exist.", 404);
+	$file= $path.'/'.$request->method.'.php';
+	if(file_exists($file)) return require_once $file;
+}
+```
