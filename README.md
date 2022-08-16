@@ -37,10 +37,6 @@ class config extends AbstractConfig{
 	public $secret= 'secret for authentication/authorization';
 	/** Result of authentication */
 	public $client;
-	public $requires_once= array(
-		'../../kernel/kernel.php',
-		'../utils/inc.db_utils.php'
-	);
 	public $versions= array(
 		'warty-warthog',
 		'hoary-hedgehog',
@@ -54,6 +50,8 @@ class config extends AbstractConfig{
 
 ```php
 <?php
+require_once '../../kernel/kernel.php';//fix path
+require_once '../utils/inc.db_utils.php';//fix path
 /* import { Config } from */require_once '_config.php';
 $config= new config();
 $config->api_url= 'https://'.$_SERVER['HTTP_HOST'].'/api/rest';
