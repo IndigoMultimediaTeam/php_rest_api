@@ -88,6 +88,26 @@ api/
 ```
 … this is similar to REST API handlering via [apiREST](./apiREST.php).
 
+The folder structure follows the requested URL:
+```
+https://api_url/api_version/Folder/…
+
+folder:
+api/
+	this_repo/
+	Folder/…
+```
+…request method indicates which file to use:
+```
+curl -X POST https://api_url/api_version/Folder
+
+file:
+folder:
+api/
+	this_repo/
+	Folder/post.php
+```
+
 For more extended version visits [DHLC-Internet-Networking/web/api/rest at dev/php_rest_api · jaandrle/DHLC-Internet-Networking](https://github.com/jaandrle/DHLC-Internet-Networking/tree/dev/php_rest_api/web/api/rest).
 
 
@@ -115,25 +135,4 @@ function api($get, $method= 'get', $body= array()){
 	$file= $path.'/'.$request->method.'.php';
 	if(file_exists($file)) return require_once $file;
 }
-```
-
-## REST API
-Use [api](./apiREST.php) function. The folder structure follows the requested URL:
-```
-https://api_url/api_version/Folder/…
-
-folder:
-api/
-	this_repo/
-	Folder/…
-```
-…request method indicates which file to use:
-```
-curl -X POST https://api_url/api_version/Folder
-
-file:
-folder:
-api/
-	this_repo/
-	Folder/post.php
 ```
