@@ -5,8 +5,7 @@
  * */
 function api($config, $request){
 	extract($config->vars_shared);
-	foreach($config->requires_once as $path_req)
-		require_once($path_req);
+	require_once '_internal/libs/globals.php';
 
 	$folder= $request->targetPath();
 	$path= realpath($folder);

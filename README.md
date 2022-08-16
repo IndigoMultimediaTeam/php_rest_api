@@ -102,24 +102,40 @@ For more extended version visits [DHLC-Internet-Networking/web/api/rest at dev/p
  * @param array<string, mixed> $body
  * */
 function api($get, $method= 'get', $body= array()){
-	$kvsbvkfbkfbk= $get; $asihbfjkbwek= $method; $khbdhsksdnkv= $body;
-	extract($GLOBALS);
-	$lbvsfkvdfkfvbk= $__dROOT.'api/rest/';
-	/* import { Config } from */require_once $lbvsfkvdfkfvbk.'_config.php';
-	$dfkjbsdkbk= new config();
-	$dfkjbsdkbk->api_url= 'https://'.$_SERVER['HTTP_HOST'].'/api/rest';
-	/* import { Request } */require_once $lbvsfkvdfkfvbk.'_internal/RequestServer.php';
-	$skbadkbdkbk= new Request($dfkjbsdkbk, $kvsbvkfbkfbk, $asihbfjkbwek, $khbdhsksdnkv);
-	extract($dfkjbsdkbk->vars_shared);
-	foreach($dfkjbsdkbk->requires_once as $path_req)
-		require_once($lbvsfkvdfkfvbk.$path_req);
+	$cwd= $GLOBALS['__dROOT'].'api/rest/';
+	require_once $cwd.'_internal/libs/globals.php';
+	/* import { Config } from */require_once $cwd.'_config.php';
+	$config= new config();
+	$config->api_url= 'https://'.$_SERVER['HTTP_HOST'].'/api/rest';
+	/* import { Request } */require_once $cwd.'_internal/RequestServer.php';
+	$request= new Request($config, $get, $method, $body);
+	extract($config->vars_shared);
 	
-	$config= $dfkjbsdkbk;
-	$request= $skbadkbdkbk;
-	$folder= $lbvsfkvdfkfvbk.$request->targetPath();
+	$folder= $cwd.$request->targetPath();
 	$path= realpath($folder);
 	if($path===false||!is_dir($path)) throw new \Exception("Endpoint '$folder' doesn’t exist.", 404);
 	$file= $path.'/'.$request->method.'.php';
 	if(file_exists($file)) return require_once $file;
 }
+```
+
+## REST API
+Use [api](./apiREST.php) function. The folder structure follows the requested URL:
+```
+https://api_url/api_version/Folder/…
+
+folder:
+api/
+	this_repo/
+	Folder/…
+```
+…request method indicates which file to use:
+```
+curl -X POST https://api_url/api_version/Folder
+
+file:
+folder:
+api/
+	this_repo/
+	Folder/post.php
 ```

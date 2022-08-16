@@ -39,8 +39,6 @@ abstract class AbstractConfig{
 	public $auth_path= 'auth';
 	/** @var str Information for auth documentation, where to get typically `client_secret`. */
 	public $auth_emails= 'info@indigo.cz';
-	/** @var str[] List of files needs to be required primary inside `api` function(s). */
-	public $requires_once= array();
 	/** @var str[] Supported API versions and their order. */
 	public $versions= array();
 
