@@ -52,6 +52,8 @@ class Request{
 				$this->error= new Exception('It is forbidden to request endpoints starting "_".', 403);
 				break;
 			}
+			if($target_nth[0]==='-') continue;
+			
 			$path_test.= '/'.$target_nth;
 			if(is_dir($path_test)) continue;
 			
