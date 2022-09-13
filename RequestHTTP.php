@@ -46,13 +46,16 @@ class Request{
 		if(array_search($this->version, $config->versions)===false)
 			$this->error= new Exception('Requested not existing version.', 400);
 		
+		$path_test= realpath('');
 		foreach($target as $target_nth_id=> $target_nth){
 			if($target_nth[0]==='_'){
 				$this->error= new Exception('It is forbidden to request endpoints starting "_".', 403);
 				break;
 			}
-			if(!is_numeric($target_nth)) continue;
-			$this->targetId[]= (int)$target_nth;
+			$path_test.= '/'.$target_nth;
+			if(is_dir($path_test)) continue;
+			
+			$this->targetId[]= mysql_escape_string($target_nth);
 			$target[$target_nth_id]= $config->path_id;
 		}
 		
