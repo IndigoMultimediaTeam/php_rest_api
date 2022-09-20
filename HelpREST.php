@@ -29,6 +29,7 @@ class Help{
 		$folder= implode('/', array_slice($request->target, 0, $help_index));
 		$path= realpath($folder).'/';
 		$this->target= $config->api_url.'/'.$request->version.'/'.$folder;
+		$this->depth= $folder ? count(explode('/', $folder)) : 0;
 		if(!$folder) $folder= '/';
 		if($path===false||!is_dir($path)) $response->error(new \Exception("Endpoint '$folder' doesn’t exist.", 404));
 		if($request->method!=='get') $response->error(new \Exception("For getting help, only GET method is supported.", 405));
@@ -46,6 +47,7 @@ class Help{
 	public function toHTML($result){
 		header('Content-Type: text/html; charset=utf-8');
 		$body= $this->arrayToHtml($result['texts']);
+		$up_link= !$this->depth ? '' : '<a href="../--help">↖ Up</a> | ';
 		echo <<<HTML
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -80,7 +82,7 @@ class Help{
 	<title>REST API Doc → {$result['title']}</title>
 </head>
 <body>
-	<code>$this->target</code>
+	<p>$up_link<code>$this->target</code></p>
 	<h1>{$result['title']}</h1>
 	{$body}
 </body>
