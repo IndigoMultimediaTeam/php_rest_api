@@ -62,6 +62,7 @@ class Help{
 		[hidden] { display: none; }
 		h1 { font-size: 2rem; } h2 { font-size: 1.5rem; } h3 { font-size: 1.17rem; } h4 { font-size: 1.00rem; } h5 { font-size: 0.83rem; } h6 { font-size: 0.67rem; }
 		h1 { margin: 0.67em 0; }
+		h1:target, h2:target, h3:target, h4:target, h5:target, h6:target { background: lightgray; }
 		pre { white-space: pre-wrap; }
 		hr { border-style: solid; border-width: 1px 0 0; color: inherit; height: 0; overflow: visible; }
 		img, svg, video, canvas, audio, iframe, embed, object { display: block; vertical-align: middle; max-width: 100%; }
@@ -100,7 +101,7 @@ HTML;
 				$out.= "	<pre syntax='$code'>$json</pre>";
 				continue;
 			}
-			else if(!is_numeric($key)) $out.= "	<h{$level}>$key</h{$level}>";
+			else if(!is_numeric($key)) $out.= "	<h{$level} id=\"".urlencode($key)."\">$key</h{$level}>";
 			if(is_array($texts)) $out.= self::arrayToHtml($texts, $level+1);
 			else {
 				$texts= preg_replace_callback('/\{@link ([^\}]+)\}/', array($this, 'linkToHtml'), $texts);
