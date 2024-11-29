@@ -76,9 +76,11 @@ class Help{
 		article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section { display: block; }
 		[type='checkbox'], [type='radio'] { box-sizing: border-box; padding: 0; }
 		/* custom */
-		body{ width: calc(100% - 4ch); max-width: 65ch; text-align: block; margin: 0 auto; }
-		pre{ outline: 3px dotted #700080; padding: 1ch; overflow: scroll; }
-		pre::before{ content: attr(syntax); display: block; padding-bottom: 2ch; color: #700080; font-weight: bold; text-transform: uppercase; }
+		@property --color-accent { syntax: "<color>"; inherits: true; initial-value: currentColor; }
+		:root { color-scheme: dark light; }
+		body{ width: calc(100% - 4ch); accent-color: #4990E2; max-width: 65ch; text-align: block; margin: 0 auto; }
+		pre{ --color-accent: #4990E2; outline: 3px dotted var(--color-accent); padding: 1ch; overflow: scroll; }
+		pre::before{ content: attr(syntax); display: block; padding-bottom: 2ch; color: var(--color-accent); font-weight: bold; text-transform: uppercase; }
 	</style>
 	<title>REST API Doc → {$result['title']}</title>
 </head>
